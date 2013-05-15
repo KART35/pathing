@@ -1,8 +1,8 @@
 from vertex import vertex as v
 class graph:
-    
-    verts = []
     def __init__(self):
+        self.lastPermVert = ''
+        self.verts = []
         return
     
     def addVertex(self, vName):
@@ -11,8 +11,6 @@ class graph:
         vObj = v(vName, vID)
         self.verts.append(vObj)
         del(vObj)
-        #print (vName, vID)
-        #print (self.verts[vID].getName(), vID)
         return vID
         
     def updateVertex(self, vID, vData):
