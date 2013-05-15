@@ -3,6 +3,8 @@ class graph:
     def __init__(self):
         self.lastPermVert = ''
         self.verts = []
+        self.vi = 0
+        self.v = 0
         return
     
     def addVertex(self, vName):
@@ -52,36 +54,38 @@ class graph:
             if self.verts[vert].getName() == name:
                 return vert
         return -1
+    def dummyGraph(self):
+        self.addVertex("A")
+        self.addVertex("B")
+        self.addVertex("C")
+        self.addVertex("D")
+        self.addVertex("E")
+        self.addVertex("F")
+        self.addVertex("G")
+        self.addVertex("H")
+        self.addVertex("I")
+        self.addVertex("J")
+
+        self.makeEdge(self.vBN('A'), self.vBN('B'), 7)
+        self.makeEdge(self.vBN('A'), self.vBN('G'), 8)
+        self.makeEdge(self.vBN('A'), self.vBN('H'), 5)
+        self.makeEdge(self.vBN('B'), self.vBN('H'), 4)
+        self.makeEdge(self.vBN('H'), self.vBN('G'), 5)
+        self.makeEdge(self.vBN('G'), self.vBN('I'), 2)
+        self.makeEdge(self.vBN('G'), self.vBN('F'), 7)
+        self.makeEdge(self.vBN('B'), self.vBN('I'), 3)
+        self.makeEdge(self.vBN('B'), self.vBN('C'), 8)
+        self.makeEdge(self.vBN('C'), self.vBN('D'), 8)
+        self.makeEdge(self.vBN('C'), self.vBN('I'), 5)
+        self.makeEdge(self.vBN('I'), self.vBN('J'), 7)
+        self.makeEdge(self.vBN('D'), self.vBN('E'), 4)
+        self.makeEdge(self.vBN('D'), self.vBN('J'), 3)
+        self.makeEdge(self.vBN('F'), self.vBN('E'), 6)
+        self.makeEdge(self.vBN('F'), self.vBN('J'), 10)
+        return
     
 g = graph()
-g.addVertex("A")
-g.addVertex("B")
-g.addVertex("C")
-g.addVertex("D")
-g.addVertex("E")
-g.addVertex("F")
-g.addVertex("G")
-g.addVertex("H")
-g.addVertex("I")
-g.addVertex("J")
-
-g.makeEdge(g.vBN('A'), g.vBN('B'), 7)
-g.makeEdge(g.vBN('A'), g.vBN('G'), 8)
-g.makeEdge(g.vBN('A'), g.vBN('H'), 5)
-g.makeEdge(g.vBN('B'), g.vBN('H'), 4)
-g.makeEdge(g.vBN('H'), g.vBN('G'), 5)
-g.makeEdge(g.vBN('G'), g.vBN('I'), 2)
-g.makeEdge(g.vBN('G'), g.vBN('F'), 7)
-g.makeEdge(g.vBN('B'), g.vBN('I'), 3)
-g.makeEdge(g.vBN('B'), g.vBN('C'), 8)
-g.makeEdge(g.vBN('C'), g.vBN('D'), 8)
-g.makeEdge(g.vBN('C'), g.vBN('I'), 5)
-g.makeEdge(g.vBN('I'), g.vBN('J'), 7)
-g.makeEdge(g.vBN('D'), g.vBN('E'), 4)
-g.makeEdge(g.vBN('D'), g.vBN('J'), 3)
-g.makeEdge(g.vBN('F'), g.vBN('E'), 6)
-g.makeEdge(g.vBN('F'), g.vBN('J'), 10)
-
+g.dummyGraph()
 g.listEdges()
 g.listCardinality()
 
