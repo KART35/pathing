@@ -7,6 +7,7 @@ class vertex:
         self._name = vName
         self._vID = vID
         self._connects = []
+        self._label = ['', -1, 'T']
         return
     def getID(self):
         return self._vID
@@ -14,7 +15,6 @@ class vertex:
         return self._name
     def link(self, vID, dist):
         self._connects.append([vID, dist])
-        #print(self._vID, self._connects)
         return
         
     def getDist(self, otherID):
