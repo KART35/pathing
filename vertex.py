@@ -7,12 +7,14 @@ class vertex:
         self._name = vName
         self._vID = vID
         self.connects = []
-        self._label = ['', -1, 'T']
+        self._label = ['', 100000000000000, 'T']
         return
     def getID(self):
         return self._vID
+    
     def getName(self):
         return self._name
+    
     def link(self, vID, dist):
         self.connects.append([vID, dist])
         return
@@ -22,8 +24,32 @@ class vertex:
             if self.connects[i][0] == otherID:
                 return self.connects[i][1]
         return -1 #not connected!
+    
     def getCardinality(self):
         return len(self.connects)
+    
     def getLinks(self):
         return self.connects
+    
+    def getLabel(self):
+        return self._label
+
+    def isPerm(self):
+        if self._label[2] == 'P':
+            return True
+        else:
+            return False
+        return -1
+    
+    def updateLabel(self, label):
+        if self._label[2] !='P':
+            self._label = label
+            if label[2] == 'P':
+                return 0
+            return True
+        else:
+            return False
+        return -1
+    
+    
     

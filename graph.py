@@ -1,10 +1,11 @@
 from vertex import vertex as v
 class graph:
     def __init__(self):
-        self.lastPermVert = ''
+        self.lastPermVert = 0
         self.verts = []
         self.vi = 0
         self.v = 0
+        self.endpoint = -1
         return
     
     def addVertex(self, vName):
@@ -39,9 +40,11 @@ class graph:
                 print("Vertex", self.verts[point].getName(), "is connected to vertex",
                       self.verts[l[edge][0]].getName(), "with distance:", l[edge][1])
         return
+    
     def listCardinality(self):
         for point in range(len(self.verts)):
             print("Edge", self.verts[point].getName(), "has a cardinality of:",self.verts[point].getCardinality())
+
     def getDistance(self, vID1, vID2):
         a = self.verts[vID1].getDist(vID2)
         b = self.verts[vID2].getDist(vID1)
@@ -49,11 +52,44 @@ class graph:
             return a
         else:
             return -1
+
     def vBN(self, name):
         for vert in range(len(self.verts)):
             if self.verts[vert].getName() == name:
                 return vert
         return -1
+
+    def getLabel(self, vID):
+        return self.verts[vID].getLabel()
+
+    def setLabel(self, vID, labelDat):
+        if self.verts[vID].updateLabel(labelDat) == 0:
+            self.lastPermVert = vID
+        return
+
+    def getSmallest(self):
+        #get temporary labels...
+        smallest = 1000000000000000
+        smallestID = -1
+        for v in range(len(self.verts)):
+            if self.verts[v].getLabel()[2] == 'T':
+                size = self.verts[v].getLabel()[1]
+                if size < smallest:
+                    smallest = size
+                    smallestID = v
+        return smallestID
+
+    def getRecentPerm(self):
+        return self.lastPermVert
+
+    def setVi(self, vID):
+        self.vi = vID
+        return
+
+    def setEndpoint(self, vID):
+        self.endpoint = vID
+        return
+    
     def dummyGraph(self):
         self.addVertex("A")
         self.addVertex("B")
@@ -84,8 +120,5 @@ class graph:
         self.makeEdge(self.vBN('F'), self.vBN('J'), 10)
         return
     
-g = graph()
-g.dummyGraph()
-g.listEdges()
-g.listCardinality()
+
 
