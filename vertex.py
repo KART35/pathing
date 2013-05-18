@@ -6,11 +6,19 @@ class vertex:
     def __init__(self, vName, vID):
         self._name = vName
         self._vID = vID
+        self.xy = [0,0]
         self.connects = []
         self._label = ['', 100000000000000, 'T']
+        self.pid = None
         return
     def getID(self):
         return self._vID
+    def setXY(self, x, y):
+        self.xy[0] = x
+        self.xy[1] = y
+
+    def getXY(self):
+        return self.xy
     
     def getName(self):
         return self._name

@@ -1,5 +1,6 @@
 from graph import graph as gr
 from time import time
+from time import sleep
 def test():
     
     g = gr()
@@ -36,9 +37,13 @@ def b(g):
         return False
     l = g.verts[vID].getLabel()
     l[2] = 'P'
+    #print(g.verts[vID].pid[0])
+    g.verts[vID].pid[0].set_color('r')
+    g.verts[vID].pid[0].set_marker('x')
+    g.plt.draw()
     #print("making" , g.verts[vID].getName(), "permanant")
-    g.lastPermVert = g.vi
-    g.setVi(g.vi +1)
+    g.lastPermVert = vID
+    g.setVi(vID)
     
     return True
 
@@ -48,6 +53,7 @@ def traceBack(begID, endID, g):
     reverse = [endName]
     
     while currID != begID:
+        
         nextVert = g.verts[currID].getLabel()[0]
         reverse.append(nextVert)
         currID = g.vBN(nextVert)
@@ -57,21 +63,28 @@ def traceBack(begID, endID, g):
     print ("length of",g.verts[endID].getLabel()[1], "units")
     return 
 
-def main():
+def main(beg,end):
     myGraph = gr()
     myGraph.dummyGraph()
-    myGraph.setVi(myGraph.vBN('A')) #set point A to be the starting point
-    myGraph.setLabel(myGraph.vBN('A'), ['', 0, 'P']) #and set it to be permanant
-    myGraph.setEndpoint(myGraph.vBN('E')) # set E as the endpoint
-    while myGraph.getLabel(myGraph.vBN('E'))[2] != 'P': #untill E has a perm label...
-        #print("")
+    myGraph.verts[myGraph.vBN(beg)].pid[0].set_marker('x')
+    myGraph.plt.margins(0.5)
+    myGraph.setVi(myGraph.vBN(beg)) #set point A to be the starting point
+    myGraph.setLabel(myGraph.vBN(beg), ['', 0, 'P']) #and set it to be permanant
+    
+    myGraph.plt.draw()
+    myGraph.setEndpoint(myGraph.vBN(end)) # set E as the endpoint
+    while myGraph.getLabel(myGraph.vBN(end))[2] != 'P': #untill E has a perm label...
+        #sleep(1)
         if a(myGraph) or b(myGraph):
             continue
         else:
             break
     
-    traceBack(myGraph.vBN('A'),myGraph.vBN('E'), myGraph) #from the end, walk back to the start.
+    traceBack(myGraph.vBN(beg),myGraph.vBN(end), myGraph) #from the end, walk back to the start.
+beg = 'A'
+end  = 'J'
+
 t0 = time() 
-main()
+main(beg,end)
 t1=time()
-print(t1-t0)
+print(t1-t0, "seconds")

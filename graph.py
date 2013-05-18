@@ -1,4 +1,9 @@
 from vertex import vertex as v
+import numpy as np
+import matplotlib.pyplot as plt
+from matplotlib.path import Path
+import time
+
 class graph:
     def __init__(self):
         self.lastPermVert = 0
@@ -6,13 +11,18 @@ class graph:
         self.vi = 0
         self.v = 0
         self.endpoint = -1
+        self.plt = plt
+        plt.ion()
         return
     
-    def addVertex(self, vName):
+    def addVertex(self, vName, x=0, y=0 ):
         l = len(self.verts)
         vID = l
         vObj = v(vName, vID)
         self.verts.append(vObj)
+        self.verts[vID].setXY(x,y)
+        self.verts[vID].pid = self.addPoint(x,y)
+        plt.annotate(self.verts[vID].getName(),(y+0.05,x+0.05))
         del(vObj)
         return vID
         
@@ -29,9 +39,15 @@ class graph:
         return self.verts
     
     def makeEdge(self, vID1, vID2, distance):
+        plt.ion()
         self.verts[vID1].link(vID2, distance)
         self.verts[vID2].link(vID1, distance)
-        return
+        hl = plt.plot([self.verts[vID1].getXY()[1],self.verts[vID2].getXY()[1]],
+                      [self.verts[vID1].getXY()[0], self.verts[vID2].getXY()[0]],
+                      'k-')
+        plt.draw()
+        #print(self.verts[vID1].getXY()[1],self.verts[vID1].getXY()[0],'->',self.verts[vID2].getXY()[1],self.verts[vID2].getXY()[0])
+        return hl
     
     def listEdges(self):
         for point in range(len(self.verts)):
@@ -89,18 +105,29 @@ class graph:
     def setEndpoint(self, vID):
         self.endpoint = vID
         return
+    def update_line(hl, new_data):
+        hl.set_xdata(np.append(hl.get_xdata(), new_data[1]))
+        hl.set_ydata(np.append(hl.get_ydata(), new_data[0]))
+        plt.draw()
+        return
+    
+    def addPoint(self, x, y):
+        hl = plt.plot(y,x, 'ko')
+        return hl
     
     def dummyGraph(self):
-        self.addVertex("A")
-        self.addVertex("B")
-        self.addVertex("C")
-        self.addVertex("D")
-        self.addVertex("E")
-        self.addVertex("F")
-        self.addVertex("G")
-        self.addVertex("H")
-        self.addVertex("I")
-        self.addVertex("J")
+        
+        self.addVertex("A",0,-1)
+        self.addVertex("B",1,0.5)
+        self.addVertex("C",1.5,1.5)
+        self.addVertex("D",1.5,3)
+        self.addVertex("E",1,4)
+        self.addVertex("F",0,3)
+        self.addVertex("G",0,1)
+        self.addVertex("H",0.5,0.5)
+        self.addVertex("I",1,1.5)
+        self.addVertex("J",1,3)
+        
 
         self.makeEdge(self.vBN('A'), self.vBN('B'), 7)
         self.makeEdge(self.vBN('A'), self.vBN('G'), 8)
