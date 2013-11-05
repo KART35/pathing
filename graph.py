@@ -1,5 +1,4 @@
 from vertex import vertex as v
-import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.path import Path
 import time
@@ -44,10 +43,23 @@ class graph:
         self.verts[vID2].link(vID1, distance)
         hl = plt.plot([self.verts[vID1].getXY()[1],self.verts[vID2].getXY()[1]],
                       [self.verts[vID1].getXY()[0], self.verts[vID2].getXY()[0]],
-                      'k-')
+                      'k--')
+        self.verts[vID1].eLst.append(hl)
+        self.verts[vID2].eLst.append(hl)
+        #hl[0].set_label(distance)
+        plt.annotate(distance, self.midpoint(self.verts[vID1].getXY()[1],
+                                             self.verts[vID2].getXY()[1],
+                                             self.verts[vID1].getXY()[0],
+                                             self.verts[vID2].getXY()[0]))
         plt.draw()
         #print(self.verts[vID1].getXY()[1],self.verts[vID1].getXY()[0],'->',self.verts[vID2].getXY()[1],self.verts[vID2].getXY()[0])
         return hl
+
+    def midpoint(self, x1, x2, y1, y2):
+        xR = (x1+x2)/2
+        yR = (y1+y2)/2
+        return (xR, yR)
+        
     
     def listEdges(self):
         for point in range(len(self.verts)):

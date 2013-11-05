@@ -10,6 +10,7 @@ class vertex:
         self.connects = []
         self._label = ['', 100000000000000, 'T']
         self.pid = None
+        self.eLst = []
         return
     def getID(self):
         return self._vID
